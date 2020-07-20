@@ -10,11 +10,8 @@ import java.util.Properties;
 
 @Component
 public class GenerateEmailUtil {
-    public static void main(String[] args) {
-        generateRegistrationVerificationMail(new SevaUser());
-    }
 
-    public static void generateRegistrationVerificationMail(SevaUser sevaUser) {
+    public void generateRegistrationVerificationMail(SevaUser sevaUser, String JWTToken) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -31,10 +28,15 @@ public class GenerateEmailUtil {
                 });
         //compose message
         try {
-            MimeMessage message = new MimeMessage(session);
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("atul.zambre123@gmail.com"));
-            message.setSubject("Test");
-            message.setText("Hello");
+            Message message = new MimeMessage(session);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(sevaUser.getSuEmail()));
+            message.setSubject("Verify Your Account - Seva Mandal");
+            message.setContent("<div>\n" +
+                    "  <h2>Hi " + sevaUser.getSuName() + ",</h2>\n" +
+                    "  <br />\n" +
+                    "  <p>Please click on below link within 3 days to verify your account.</p>\n" +
+                    "<a href=\"http://localhost:4200/verifyAccount/" + JWTToken + "\">verify</a>\n" +
+                    "</div>", "text/html");
             //send message
             Transport.send(message);
             System.out.println("message sent successfully");
@@ -45,3 +47,4 @@ public class GenerateEmailUtil {
     }
 
 }
+

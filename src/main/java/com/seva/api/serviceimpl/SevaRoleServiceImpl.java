@@ -12,6 +12,7 @@ import java.util.List;
 public class SevaRoleServiceImpl implements SevaRoleService {
     @Autowired
     SevaRoleRepository sevaRoleRepository;
+
     @Override
     public List<SevaRole> getAllRoles() {
         return sevaRoleRepository.findAll();

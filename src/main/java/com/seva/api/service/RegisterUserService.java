@@ -5,4 +5,8 @@ import com.seva.api.entity.SevaUser;
 public interface RegisterUserService {
 
     public SevaUser registerUser(SevaUser sevaUser);
+
+    public SevaUser verifyAccount(String JWTToken);
+
+
 }
