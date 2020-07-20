@@ -1,8 +1,7 @@
 package com.seva.api.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +41,19 @@ public class SevaUser implements Serializable {
 	@OneToMany(mappedBy="sevaUser")
 	private List<SevaUserRole> sevaUserRoles;
 
+	//bi-directional many-to-one association to SevaUserVerification
+	@OneToMany(mappedBy="sevaUser")
+	private List<SevaUserVerification> sevaUserVerifications;
+
 	public SevaUser() {
+	}
+
+	public List<SevaUserVerification> getSevaUserVerifications() {
+		return sevaUserVerifications;
+	}
+
+	public void setSevaUserVerifications(List<SevaUserVerification> sevaUserVerifications) {
+		this.sevaUserVerifications = sevaUserVerifications;
 	}
 
 	public Long getSuId() {

@@ -1,7 +1,7 @@
 package com.seva.api.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 

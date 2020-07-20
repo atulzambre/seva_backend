@@ -1,8 +1,8 @@
 package com.seva.api.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
 
 
 /**
@@ -16,7 +16,8 @@ public class SevaUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="sur_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="sur_id",columnDefinition = "serial")
 	private Long surId;
 
 

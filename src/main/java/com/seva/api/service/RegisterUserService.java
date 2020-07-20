@@ -4,5 +4,5 @@ import com.seva.api.entity.SevaUser;
 
 public interface RegisterUserService {
 
-    public void registerUser(SevaUser sevaUser);
+    public SevaUser registerUser(SevaUser sevaUser);
 }
