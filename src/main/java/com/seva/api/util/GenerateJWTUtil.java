@@ -26,6 +26,9 @@ public class GenerateJWTUtil {
     ReadPropertiesUtil readPropertiesUtil;
 
     @Autowired
+    EncodeDecodeBase64Util encodeDecodeBase64Util;
+
+    @Autowired
     SevaUserVerificationRepository sevaUserVerificationRepository;
 
     public String generateJWTForAccountVerification(SevaUser sevaUser, int verificationCode) {
@@ -33,6 +36,7 @@ public class GenerateJWTUtil {
         SecretKey key = getSecretKey();
         Date expireDate = generateExpirationDate();
         token = Jwts.builder().signWith(key, SignatureAlgorithm.HS256).setIssuer("sevamandal").setSubject(sevaUser.getSuId().toString()).setExpiration(expireDate).setIssuedAt(new Date()).claim("validateAccount", verificationCode).compact();
+        token=encodeDecodeBase64Util.encode(token);
         return token;
     }
 
@@ -60,6 +64,7 @@ public class GenerateJWTUtil {
 
     public Boolean verifyAccountJWT(String JWTToken) {
         try {
+            JWTToken=encodeDecodeBase64Util.decode(JWTToken);
             Key key = Keys.hmacShaKeyFor(readPropertiesUtil.getSecretKey().getBytes(StandardCharsets.UTF_8));
             if (!Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(JWTToken).getBody().getIssuer().equals("sevamandal")) {
                 return false;
